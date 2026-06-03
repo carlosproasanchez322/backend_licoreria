@@ -7,7 +7,9 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
-      'https://fronted-licoreria-s2pc.vercel.app',
+      'https://fronted-licoreria-v4.vercel.app',
+      'https://fronted-licoreria-v4-git-main-codigoyara.vercel.app',
+      'https://fronted-licoreria-v4-culxwrx7w-codigoyara.vercel.app',
     ],
     credentials: true,
   });
