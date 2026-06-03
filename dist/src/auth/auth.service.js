@@ -112,7 +112,12 @@ let AuthService = class AuthService {
                 nombres: user.nombres,
                 apellidos: user.apellidos,
                 usuario: user.usuario,
-                rol: user.rol.nombre,
+                estado: user.estado,
+                idRol: user.idRol,
+                rol: {
+                    idRol: user.rol.idRol,
+                    nombre: user.rol.nombre,
+                },
             },
         };
     }
