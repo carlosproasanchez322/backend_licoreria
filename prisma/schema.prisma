@@ -1,0 +1,219 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Categoria {
+  idCategoria Int        @id @default(autoincrement()) @map("id_categoria")
+  nombre      String       @unique @db.VarChar(100)
+  descripcion String?      @db.Text
+  productos   Producto[]
+
+  @@map("categorias")
+}
+
+model Marca {
+  idMarca   Int        @id @default(autoincrement()) @map("id_marca")
+  nombre    String     @unique @db.VarChar(100)
+  productos Producto[]
+
+  @@map("marcas")
+}
+
+model UnidadMedida {
+  idUnidad    Int        @id @default(autoincrement()) @map("id_unidad")
+  nombre      String     @db.VarChar(50)
+  abreviatura String     @db.VarChar(10)
+  productos   Producto[]
+
+  @@map("unidades_medida")
+}
+
+model Producto {
+  idProducto       Int       @id @default(autoincrement()) @map("id_producto")
+  codigoBarra      String?   @unique @map("codigo_barra") @db.VarChar(50)
+  nombre           String    @db.VarChar(150)
+  descripcion      String?   @db.Text
+  precioCompra     Decimal   @map("precio_compra") @db.Decimal(10, 2)
+  precioVenta      Decimal   @map("precio_venta") @db.Decimal(10, 2)
+  stock            Int       @default(0)
+  stockMinimo      Int       @default(5) @map("stock_minimo")
+  tieneIgv         Boolean   @default(true) @map("tiene_igv")
+  esLicor          Boolean   @default(false) @map("es_licor")
+  gradoAlcohol     Decimal?  @map("grado_alcohol") @db.Decimal(5, 2)
+  fechaVencimiento DateTime? @map("fecha_vencimiento") @db.Date
+  idCategoria      Int       @map("id_categoria")
+  idMarca          Int?      @map("id_marca")
+  idUnidad         Int       @map("id_unidad")
+
+  categoria Categoria    @relation(fields: [idCategoria], references: [idCategoria])
+  marca     Marca?       @relation(fields: [idMarca], references: [idMarca])
+  unidad    UnidadMedida @relation(fields: [idUnidad], references: [idUnidad])
+
+  media          MediaProducto[]
+  detalleVentas  DetalleVenta[]
+  detalleCompras DetalleCompra[]
+  movimientos    MovimientoInventario[]
+
+  @@map("productos")
+}
+
+model MediaProducto {
+  idMedia      Int       @id @default(autoincrement()) @map("id_media")
+  idProducto   Int       @map("id_producto")
+  tipo         String    @db.VarChar(20)
+  nombreArchivo String   @map("nombre_archivo") @db.VarChar(255)
+  ruta         String    @db.VarChar(500)
+  urlPublica   String?   @map("url_publica") @db.VarChar(500)
+  tamano       Int       @map("tamano")
+  mimeType     String    @map("mime_type") @db.VarChar(50)
+  esPrincipal  Boolean   @default(false) @map("es_principal")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  producto Producto @relation(fields: [idProducto], references: [idProducto], onDelete: Cascade)
+
+  @@map("media_productos")
+}
+
+model Cliente {
+  idCliente      Int     @id @default(autoincrement()) @map("id_cliente")
+  tipoDocumento  String? @map("tipo_documento") @db.VarChar(10)
+  numeroDocumento String? @unique @map("numero_documento") @db.VarChar(20)
+  nombres        String? @db.VarChar(100)
+  apellidos      String? @db.VarChar(100)
+  telefono       String? @db.VarChar(20)
+  email          String? @db.VarChar(100)
+  direccion      String? @db.Text
+  ventas         Venta[]
+
+  @@map("clientes")
+}
+
+model Rol {
+  idRol    Int       @id @default(autoincrement()) @map("id_rol")
+  nombre   String    @unique @db.VarChar(50)
+  usuarios Usuario[]
+
+  @@map("roles")
+}
+
+model Usuario {
+  idUsuario    Int     @id @default(autoincrement()) @map("id_usuario")
+  nombres      String  @db.VarChar(100)
+  apellidos    String  @db.VarChar(100)
+  usuario      String  @unique @db.VarChar(50)
+  passwordHash String  @map("password_hash")
+  estado       Boolean @default(true)
+  idRol        Int     @map("id_rol")
+
+  rol     Rol      @relation(fields: [idRol], references: [idRol])
+  ventas  Venta[]
+  compras Compra[]
+
+  @@map("usuarios")
+}
+
+model MetodoPago {
+  idMetodo Int     @id @default(autoincrement()) @map("id_metodo")
+  nombre   String  @db.VarChar(50)
+  ventas   Venta[]
+
+  @@map("metodos_pago")
+}
+
+model Proveedor {
+  idProveedor  Int      @id @default(autoincrement()) @map("id_proveedor")
+  razonSocial  String   @map("razon_social") @db.VarChar(150)
+  ruc          String?  @unique @db.VarChar(20)
+  telefono     String?  @db.VarChar(20)
+  email        String?  @db.VarChar(100)
+  direccion    String?  @db.Text
+  compras      Compra[]
+
+  @@map("proveedores")
+}
+
+model Venta {
+  idVenta            Int      @id @default(autoincrement()) @map("id_venta")
+  fecha              DateTime @default(now())
+  subtotal           Decimal  @db.Decimal(10, 2)
+  igv                Decimal  @db.Decimal(10, 2)
+  total              Decimal  @db.Decimal(10, 2)
+  tipoComprobante    String?  @map("tipo_comprobante") @db.VarChar(20)
+  numeroComprobante  String?  @map("numero_comprobante") @db.VarChar(50)
+  idCliente          Int?     @map("id_cliente")
+  idUsuario          Int      @map("id_usuario")
+  idMetodo           Int      @map("id_metodo")
+
+  cliente  Cliente?     @relation(fields: [idCliente], references: [idCliente])
+  usuario  Usuario      @relation(fields: [idUsuario], references: [idUsuario])
+  metodo   MetodoPago   @relation(fields: [idMetodo], references: [idMetodo])
+  detalles DetalleVenta[]
+
+  @@map("ventas")
+}
+
+model DetalleVenta {
+  idDetalle      Int     @id @default(autoincrement()) @map("id_detalle")
+  idVenta        Int     @map("id_venta")
+  idProducto     Int     @map("id_producto")
+  cantidad       Int
+  precioUnitario Decimal @map("precio_unitario") @db.Decimal(10, 2)
+  descuento      Decimal @default(0) @db.Decimal(10, 2)
+  subtotal       Decimal @db.Decimal(10, 2)
+
+  venta    Venta    @relation(fields: [idVenta], references: [idVenta], onDelete: Cascade)
+  producto Producto @relation(fields: [idProducto], references: [idProducto], onDelete: Cascade)
+
+  @@map("detalle_ventas")
+}
+
+model Compra {
+  idCompra      Int       @id @default(autoincrement()) @map("id_compra")
+  fecha         DateTime  @default(now())
+  subtotal      Decimal?  @db.Decimal(10, 2)
+  igv           Decimal?  @db.Decimal(10, 2)
+  total         Decimal?  @db.Decimal(10, 2)
+  numeroFactura String?   @map("numero_factura") @db.VarChar(50)
+  idProveedor   Int       @map("id_proveedor")
+  idUsuario     Int       @map("id_usuario")
+
+  proveedor Proveedor       @relation(fields: [idProveedor], references: [idProveedor])
+  usuario   Usuario         @relation(fields: [idUsuario], references: [idUsuario])
+  detalles  DetalleCompra[]
+
+  @@map("compras")
+}
+
+model DetalleCompra {
+  idDetalle   Int     @id @default(autoincrement()) @map("id_detalle")
+  idCompra    Int     @map("id_compra")
+  idProducto  Int     @map("id_producto")
+  cantidad    Int
+  precioCompra Decimal @map("precio_compra") @db.Decimal(10, 2)
+  subtotal    Decimal @db.Decimal(10, 2)
+
+  compra   Compra   @relation(fields: [idCompra], references: [idCompra], onDelete: Cascade)
+  producto Producto @relation(fields: [idProducto], references: [idProducto], onDelete: Cascade)
+
+  @@map("detalle_compras")
+}
+
+model MovimientoInventario {
+  idMovimiento   Int      @id @default(autoincrement()) @map("id_movimiento")
+  idProducto     Int      @map("id_producto")
+  tipoMovimiento String   @map("tipo_movimiento") @db.VarChar(20)
+  motivo         String?  @db.VarChar(50)
+  cantidad       Int
+  stockAnterior  Int      @map("stock_anterior")
+  stockNuevo     Int      @map("stock_nuevo")
+  fecha          DateTime @default(now())
+
+  producto Producto @relation(fields: [idProducto], references: [idProducto], onDelete: Cascade)
+
+  @@map("movimientos_inventario")
+}

@@ -1,0 +1,45 @@
+[build]
+builder = "nixpacks"
+buildCommand = "npm run build"
+startCommand = "npm run start:prod"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 60
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[[services]]
+name = "inventario-licoreria-backend"
+port = 3000
+domain = "backend-inventario-licoreria.railway.app"
+
+  [services.env]
+  NODE_ENV = "production"
+  PORT = "3000"
+
+  [services.checks]
+    [services.checks.liveness]
+    type = "http"
+    path = "/health"
+    interval = 30
+    timeout = 10
+    maxFailures = 3
+
+    [services.checks.readiness]
+    type = "http"
+    path = "/health"
+    interval = 10
+    timeout = 5
+    maxFailures = 1
+
+[build.args]
+NODE_VERSION = "20"
+
+[env]
+DATABASE_URL = { value = "", description = "PostgreSQL connection string from Neon" }
+JWT_SECRET = { value = "", description = "Secret key for JWT tokens (min 32 chars)" }
+CORS_ORIGIN = { value = "https://inventario-licoreria.vercel.app,http://localhost:3000", description = "Allowed CORS origins" }
+
+[volumes]
+"/app/uploads" = { mountPath = "/app/uploads", size = "1GB" }

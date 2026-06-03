@@ -1,0 +1,152 @@
+export const ROLES = ['ADMIN', 'CAJERO', 'INVENTARIO'] as const;
+
+export const METODOS_PAGO = [
+  'EFECTIVO',
+  'TARJETA',
+  'YAPE',
+  'PLIN',
+  'TRANSFERENCIA',
+] as const;
+
+export const UNIDADES = [
+  { nombre: 'Unidad', abreviatura: 'UND' },
+  { nombre: 'Caja', abreviatura: 'CJA' },
+  { nombre: 'Pack x6', abreviatura: 'P6' },
+  { nombre: 'Litro', abreviatura: 'LT' },
+  { nombre: 'Botella', abreviatura: 'BOT' },
+  { nombre: 'Six Pack', abreviatura: 'SIX' },
+] as const;
+
+export const CATEGORIAS = [
+  { nombre: 'Licores', descripcion: 'Whisky, ron, vodka, gin' },
+  { nombre: 'Cervezas', descripcion: 'Nacionales e importadas' },
+  { nombre: 'Vinos', descripcion: 'Tintos, blancos, espumantes' },
+  { nombre: 'Piscos', descripcion: 'Quebranta, Italia, mosto' },
+  { nombre: 'Ron', descripcion: 'Ron nacional e importado' },
+  { nombre: 'Whisky', descripcion: 'Blended y single malt' },
+  { nombre: 'Vodka', descripcion: 'Vodkas premium y económicos' },
+  { nombre: 'Gaseosas', descripcion: 'Refrescos y aguas' },
+  { nombre: 'Snacks', descripcion: 'Piqueos y botanas' },
+  { nombre: 'Cigarros', descripcion: 'Tabaco y accesorios' },
+  { nombre: 'Energizantes', descripcion: 'Bebidas energéticas' },
+  { nombre: 'MIXERS', descripcion: 'Jugos y complementos' },
+] as const;
+
+export const MARCAS = [
+  'Johnnie Walker',
+  'Jack Daniels',
+  'Absolut',
+  'Smirnoff',
+  'Bacardi',
+  'Havana Club',
+  'Campari',
+  'Ballantines',
+  'Chivas Regal',
+  'Glenfiddich',
+  'Don Julio',
+  'Jose Cuervo',
+  'Santa Rita',
+  'Tabernero',
+  'Pisco Portón',
+  'Ocucaje',
+  'Cusqueña',
+  'Pilsen',
+  'Corona',
+  'Heineken',
+  'Red Bull',
+  'Monster',
+  'Coca-Cola',
+  'Inca Kola',
+  'Marlboro',
+  'Lucky Strike',
+] as const;
+
+export const PROVEEDORES = [
+  {
+    razonSocial: 'Distribuidora Lima SAC',
+    ruc: '20100000001',
+    telefono: '014567890',
+    email: 'ventas@distribuidora.com',
+  },
+  {
+    razonSocial: 'Importadora Andina EIRL',
+    ruc: '20100000002',
+    telefono: '014567891',
+    email: 'compras@andina.com',
+  },
+  {
+    razonSocial: 'Bebidas del Norte SA',
+    ruc: '20100000003',
+    telefono: '014567892',
+    email: 'logistica@norte.com',
+  },
+  {
+    razonSocial: 'Comercial Sur Peru',
+    ruc: '20100000004',
+    telefono: '014567893',
+    email: 'info@sursa.com',
+  },
+  {
+    razonSocial: 'Licores Premium SAC',
+    ruc: '20100000005',
+    telefono: '014567894',
+    email: 'premium@licores.pe',
+  },
+  {
+    razonSocial: 'Cervezas Unidos',
+    ruc: '20100000006',
+    telefono: '014567895',
+    email: 'pedidos@cervezas.pe',
+  },
+  {
+    razonSocial: 'Vinos y Más',
+    ruc: '20100000007',
+    telefono: '014567896',
+    email: 'vinos@vinosymas.pe',
+  },
+  {
+    razonSocial: 'Snack Distribución',
+    ruc: '20100000008',
+    telefono: '014567897',
+    email: 'snacks@distrib.pe',
+  },
+] as const;
+
+export const USUARIOS = [
+  { nombres: 'Carlos', apellidos: 'Administrador', usuario: 'carlos', rol: 'ADMIN' },
+  { nombres: 'María', apellidos: 'González', usuario: 'maria', rol: 'CAJERO' },
+  { nombres: 'Juan', apellidos: 'Pérez', usuario: 'juan', rol: 'CAJERO' },
+  { nombres: 'Ana', apellidos: 'Torres', usuario: 'ana', rol: 'CAJERO' },
+  { nombres: 'Luis', apellidos: 'Ramírez', usuario: 'luis', rol: 'INVENTARIO' },
+  { nombres: 'Rosa', apellidos: 'Vega', usuario: 'rosa', rol: 'INVENTARIO' },
+  { nombres: 'Pedro', apellidos: 'Castro', usuario: 'pedro', rol: 'CAJERO' },
+] as const;
+
+export const PRODUCTOS_BASE = [
+  { nombre: 'Whisky Black Label 750ml', cat: 'Whisky', marca: 'Johnnie Walker', compra: 85, venta: 120, licor: true, alcohol: 40 },
+  { nombre: 'Whisky Red Label 750ml', cat: 'Whisky', marca: 'Johnnie Walker', compra: 55, venta: 78, licor: true, alcohol: 40 },
+  { nombre: 'Whisky Chivas 12 años', cat: 'Whisky', marca: 'Chivas Regal', compra: 95, venta: 135, licor: true, alcohol: 40 },
+  { nombre: 'Jack Daniels 750ml', cat: 'Licores', marca: 'Jack Daniels', compra: 70, venta: 98, licor: true, alcohol: 40 },
+  { nombre: 'Ron Cartavio Black', cat: 'Ron', marca: 'Havana Club', compra: 28, venta: 42, licor: true, alcohol: 40 },
+  { nombre: 'Ron Bacardi Superior', cat: 'Ron', marca: 'Bacardi', compra: 32, venta: 48, licor: true, alcohol: 37.5 },
+  { nombre: 'Vodka Absolut 750ml', cat: 'Vodka', marca: 'Absolut', compra: 45, venta: 65, licor: true, alcohol: 40 },
+  { nombre: 'Vodka Smirnoff 750ml', cat: 'Vodka', marca: 'Smirnoff', compra: 28, venta: 40, licor: true, alcohol: 37.5 },
+  { nombre: 'Pisco Quebranta 750ml', cat: 'Piscos', marca: 'Pisco Portón', compra: 22, venta: 35, licor: true, alcohol: 42 },
+  { nombre: 'Pisco Italia 750ml', cat: 'Piscos', marca: 'Ocucaje', compra: 18, venta: 28, licor: true, alcohol: 42 },
+  { nombre: 'Gin Bombay Sapphire', cat: 'Licores', marca: 'Campari', compra: 55, venta: 78, licor: true, alcohol: 47 },
+  { nombre: 'Tequila Don Julio', cat: 'Licores', marca: 'Don Julio', compra: 120, venta: 165, licor: true, alcohol: 38 },
+  { nombre: 'Cerveza Cusqueña 630ml', cat: 'Cervezas', marca: 'Cusqueña', compra: 4.5, venta: 7, licor: true, alcohol: 5 },
+  { nombre: 'Cerveza Pilsen 630ml', cat: 'Cervezas', marca: 'Pilsen', compra: 4, venta: 6.5, licor: true, alcohol: 4.8 },
+  { nombre: 'Cerveza Corona 355ml', cat: 'Cervezas', marca: 'Corona', compra: 3.5, venta: 6, licor: true, alcohol: 4.5 },
+  { nombre: 'Cerveza Heineken 330ml', cat: 'Cervezas', marca: 'Heineken', compra: 4, venta: 7, licor: true, alcohol: 5 },
+  { nombre: 'Vino Tabernero Gran Reserva', cat: 'Vinos', marca: 'Tabernero', compra: 25, venta: 38, licor: true, alcohol: 13.5 },
+  { nombre: 'Vino Santa Rita 120', cat: 'Vinos', marca: 'Santa Rita', compra: 18, venta: 28, licor: true, alcohol: 13 },
+  { nombre: 'Red Bull 250ml', cat: 'Energizantes', marca: 'Red Bull', compra: 4, venta: 7.5, licor: false },
+  { nombre: 'Monster Energy 473ml', cat: 'Energizantes', marca: 'Monster', compra: 3.5, venta: 6.5, licor: false },
+  { nombre: 'Coca-Cola 2L', cat: 'Gaseosas', marca: 'Coca-Cola', compra: 5, venta: 8.5, licor: false },
+  { nombre: 'Inca Kola 2L', cat: 'Gaseosas', marca: 'Inca Kola', compra: 5, venta: 8.5, licor: false },
+  { nombre: 'Papas Lays 150g', cat: 'Snacks', marca: 'Coca-Cola', compra: 2.5, venta: 4.5, licor: false },
+  { nombre: 'Mani salado 200g', cat: 'Snacks', marca: 'Coca-Cola', compra: 1.8, venta: 3.5, licor: false },
+  { nombre: 'Cigarro Marlboro Box', cat: 'Cigarros', marca: 'Marlboro', compra: 12, venta: 16, licor: false },
+  { nombre: 'Cigarro Lucky Strike', cat: 'Cigarros', marca: 'Lucky Strike', compra: 11, venta: 15, licor: false },
+] as const;
