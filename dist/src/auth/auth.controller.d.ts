@@ -12,16 +12,16 @@ export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     register(body: RegisterDto): Promise<{
-        nombres: string;
-        apellidos: string;
-        usuario: string;
-        estado: boolean;
+        idRol: number;
         rol: {
-            idRol: number;
             nombre: string;
+            idRol: number;
         };
         idUsuario: number;
-        idRol: number;
+        usuario: string;
+        nombres: string;
+        apellidos: string;
+        estado: boolean;
     }>;
     login(body: LoginDto): Promise<{
         access_token: string;
@@ -39,15 +39,15 @@ export declare class AuthController {
         };
     }>;
     profile(req: AuthRequest): Promise<{
-        nombres: string;
-        apellidos: string;
-        usuario: string;
-        estado: boolean;
         rol: {
-            idRol: number;
             nombre: string;
+            idRol: number;
         };
         idUsuario: number;
+        usuario: string;
+        nombres: string;
+        apellidos: string;
+        estado: boolean;
     }>;
 }
 export {};

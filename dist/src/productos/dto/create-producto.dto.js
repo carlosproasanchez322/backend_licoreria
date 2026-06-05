@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateProductoDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class CreateProductoDto {
     nombre;
@@ -33,16 +34,19 @@ __decorate([
     __metadata("design:type", String)
 ], CreateProductoDto.prototype, "descripcion", void 0);
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => parseFloat(value)),
     (0, class_validator_1.IsNumber)({ maxDecimalPlaces: 2 }),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateProductoDto.prototype, "precioCompra", void 0);
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => parseFloat(value)),
     (0, class_validator_1.IsNumber)({ maxDecimalPlaces: 2 }),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateProductoDto.prototype, "precioVenta", void 0);
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => parseInt(value)),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
@@ -53,17 +57,20 @@ __decorate([
     __metadata("design:type", String)
 ], CreateProductoDto.prototype, "codigoBarra", void 0);
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => parseInt(value)),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
 ], CreateProductoDto.prototype, "idCategoria", void 0);
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => parseInt(value)),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
 ], CreateProductoDto.prototype, "idUnidad", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Transform)(({ value }) => (value ? parseInt(value) : undefined)),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
